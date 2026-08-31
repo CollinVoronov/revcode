@@ -1,0 +1,61 @@
+# Keep the build context small. Anything the build genuinely needs must NOT be
+# listed here — in particular patches/, scripts/, assets/, pnpm-lock.yaml and
+# pnpm-workspace.yaml are all load-bearing for `pnpm install` and the packed build.
+node_modules
+**/node_modules
+
+.git
+.gitignore
+
+# Build outputs are regenerated inside the image.
+apps/*/dist
+packages/*/dist
+infra/*/dist
+dist-electron
+.electron-runtime
+release
+release-mock
+build
+
+# Vendored reference checkouts (~126MB), not part of the build.
+.repos
+
+# Rust/native build artifacts.
+native/**/target
+
+# Local state, caches, logs.
+.t3
+.turbo
+.bun
+.vite-hooks
+.tanstack
+.astro
+.alchemy
+.logs
+.plans
+.gstack
+.showcase
+apps/mobile/.showcase
+**/__screenshots__
+apps/web/.playwright
+apps/web/playwright-report
+artifacts
+*.log
+*.tsbuildinfo
+.DS_Store
+
+# Never ship local secrets into an image layer.
+.env
+.env.*
+!.env.example
+
+# Editor/CI metadata.
+.idea
+.vscode
+.github
+.devcontainer
+.claude
+.cursor
+.codex
+.agents
+.macroscope

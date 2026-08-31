@@ -8,7 +8,14 @@ import { describe, expect, it } from "vite-plus/test";
 
 import { isEntrypoint } from "./entrypoint.ts";
 
-const makeTempDir = () => NodeFS.mkdtempSync(NodePath.join(NodeOS.tmpdir(), "t3-entrypoint-test-"));
+// Resolved with realpath because on macOS `os.tmpdir()` sits under /var, which
+// is itself a symlink to /private/var. `isEntrypoint` realpaths the entry path,
+// so an unresolved temp dir here would compare file:///var/... against
+// file:///private/var/... and fail for a reason the test does not intend. Node
+// hands the real path to `import.meta.url` in production, so resolving up front
+// is also the more faithful fixture. No-op on platforms where tmpdir is real.
+const makeTempDir = () =>
+  NodeFS.realpathSync(NodeFS.mkdtempSync(NodePath.join(NodeOS.tmpdir(), "t3-entrypoint-test-")));
 
 describe("isEntrypoint", () => {
   it("uses the runtime answer when Node provides one", () => {
