@@ -1,5 +1,7 @@
 {
   "id": "/",
+  "name": "RevCode",
+  "short_name": "RevCode",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
