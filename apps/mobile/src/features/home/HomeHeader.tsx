@@ -9,7 +9,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { ControlPillMenu } from "../../components/ControlPill";
 import { SymbolView } from "../../components/AppSymbol";
-import { T3Wordmark } from "../../components/T3Wordmark";
+import { RevWordmark } from "../../components/RevWordmark";
 import { HOME_HORIZONTAL_INSET } from "../../lib/layoutMetrics";
 import { resolveMobileStageLabel } from "../../lib/mobileBranding";
 import { useUniwindTheme } from "../../lib/useUniwindTheme";
@@ -215,11 +215,14 @@ function AndroidHomeHeader(props: HomeHeaderProps) {
               onPress={props.onOpenEnvironments}
               brand={
                 <View className="flex-row items-center gap-2">
-                  {/* Mirrors the desktop SidebarBrand: T3 mark + muted "Code". */}
-                  <T3Wordmark colorClassName="accent-icon" height={15} />
-                  <RNText className="-ml-0.5 text-[21px] font-t3-medium tracking-[-0.5px] text-foreground-muted">
-                    Code
-                  </RNText>
+                  {/* Mirrors the desktop SidebarBrand: "Rev" + muted "Code",
+                      gapless so the lockup reads as the single word RevCode. */}
+                  <View className="flex-row items-center">
+                    <RevWordmark />
+                    <RNText className="text-[21px] font-t3-medium tracking-[-0.5px] text-foreground-muted">
+                      Code
+                    </RNText>
+                  </View>
                   <View className="rounded-full bg-subtle px-2 py-0.75">
                     <RNText className="text-[11px] font-t3-bold tracking-[1.1px] text-foreground-muted uppercase">
                       {stageLabel}
